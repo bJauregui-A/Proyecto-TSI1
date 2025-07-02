@@ -1,0 +1,7 @@
+com\pagina\test\controller\MenuController.class
+com\pagina\test\model\Curso.class
+com\pagina\test\TestApplication.class
+com\pagina\test\controller\MainController.class
+com\pagina\test\model\CursoRepository.class
+com\pagina\test\model\UserRepository.class
+com\pagina\test\model\Usuario.class
