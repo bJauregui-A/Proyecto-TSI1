@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/css/cursos-styles.css}">
+    <title>Gestión de Cursos</title>
+  <style>
+
+
+        
+
+        .curso-card.editing {
+            border-color: #007bff;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+        
+        .curso-card h2 {
+            margin: 0 0 15px 0;
+            color: #2c3e50;
+            font-size: 1.4em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+        }
+        
+        .curso-card p {
+            margin: 10px 0;
+            color: #555;
+            line-height: 1.5;
+        }
+        
+        .curso-info {
+            margin: 15px 0;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .curso-detail {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .curso-detail:last-child {
+            border-bottom: none;
+        }
+        
+        .curso-detail-label {
+            font-weight: bold;
+            color: #34495e;
+            min-width: 100px;
+        }
+        
+        .curso-detail-value {
+            color: #2c3e50;
+            flex: 1;
+            text-align: right;
+        }
+        
+        .precio {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #27ae60;
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(39, 174, 96, 0.1);
+            border-radius: 6px;
+        }
+        
+        .curso-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #1e7e34;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        .editable-field {
+            border: none;
+            background: transparent;
+            width: 100%;
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            padding: 2px 4px;
+        }
+        
+        .editing .editable-field {
+            border: 1px solid #007bff;
+            background: white;
+            border-radius: 4px;
+        }
+        
+        .editable-field:focus {
+            outline: none;
+            border-color: #0056b3;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+        
+        textarea.editable-field {
+            resize: vertical;
+            min-height: 60px;
+        }
+        
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="~{menu :: menuFragment}"></div>
+    
+    <div class="container">
+        <h1>Gestión de Cursos</h1>
+        
+        <div class="cursos-container">
+            <div th:each="curso : ${cursos}" class="curso-card" th:data-id="${curso.id}">
+                <h2>
+                    <input type="text" class="editable-field" th:value="${curso.nombre}" 
+                           data-field="nombre" readonly>
+                </h2>
+                
+
+                <div class="curso-info">
+                    <div class="curso-detail">
+                        <span class="curso-detail-label">Modalidad:</span>
+                        <span class="curso-detail-value">
+                            <input type="text" class="editable-field" th:value="${curso.modalidad}" 
+                                   data-field="modalidad" readonly>
+                        </span>
+                    </div>
+                    <div class="curso-detail">
+                        <span class="curso-detail-label">Dirigido a:</span>
+                        <span class="curso-detail-value">
+                            <input type="text" class="editable-field" th:value="${curso.dirigidoa}" 
+                                   data-field="dirigidoa" readonly>
+                        </span>
+                    </div>
+                    <div class="curso-detail">
+                        <span class="curso-detail-label">Duración:</span>
+                        <span class="curso-detail-value">
+                            <input type="number" class="editable-field" th:value="${curso.horas}" 
+                                   data-field="horas" readonly> horas
+                        </span>
+                    </div>
+                </div>
+                <p>
+                    <textarea class="editable-field" th:text="${curso.descripcion}" 
+                              data-field="descripcion" readonly></textarea>
+                </p>
+                
+                <p class="precio">
+                    $<input type="number" step="0.01" class="editable-field" th:value="${curso.precio}" 
+                            data-field="precio" readonly style="background: transparent; border: none; color: inherit; font-weight: bold; font-size: inherit;">
+                </p>
+                
+                <div class="curso-detail">
+                    <span class="curso-detail-label">Link de Pago:</span>
+                    <span class="curso-detail-value">
+                        <input type="url" class="editable-field" th:value="${curso.linkPago}" 
+                               data-field="linkPago" readonly>
+                    </span>
+                </div>
+                
+                <div class="curso-actions">
+                    <button class="btn btn-primary edit-btn">Editar</button>
+                    <button class="btn btn-success save-btn" style="display: none;">Guardar</button>
+                    <button class="btn btn-secondary cancel-btn" style="display: none;">Cancelar</button>
+                    <form th:action="@{/cursos/delete}" method="post" style="display: inline;">
+                        <input type="hidden" name="id" th:value="${curso.id}">
+                        <button type="submit" class="btn btn-danger" 
+                                onclick="return confirm('¿Está seguro de que desea eliminar este curso?')">
+                            Eliminar
+                        </button>
+                    </form>
+
+                </div>
+                
+                <div class="message-container"></div>
+            </div>
+        </div>
+        
+        <div th:if="${#lists.isEmpty(cursos)}">
+            <p>No hay cursos registrados.</p>
+        </div>
+    </div>
+    
+    <div th:replace="~{menu :: finFragment}"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cursoCards = document.querySelectorAll('.curso-card');
+            
+            cursoCards.forEach(card => {
+                const editBtn = card.querySelector('.edit-btn');
+                const saveBtn = card.querySelector('.save-btn');
+                const cancelBtn = card.querySelector('.cancel-btn');
+                const editableFields = card.querySelectorAll('.editable-field');
+                const messageContainer = card.querySelector('.message-container');
+                
+                let originalValues = {};
+                
+                // Función para mostrar mensajes
+                function showMessage(message, type) {
+                    messageContainer.innerHTML = `<div class="${type}-message">${message}</div>`;
+                    setTimeout(() => {
+                        messageContainer.innerHTML = '';
+                    }, 3000);
+                }
+                
+                // Función para guardar valores originales
+                function saveOriginalValues() {
+                    originalValues = {};
+                    editableFields.forEach(field => {
+                        originalValues[field.dataset.field] = field.value;
+                    });
+                }
+                
+                // Función para restaurar valores originales
+                function restoreOriginalValues() {
+                    editableFields.forEach(field => {
+                        field.value = originalValues[field.dataset.field];
+                    });
+                }
+                
+                // Botón Editar
+                editBtn.addEventListener('click', function() {
+                    saveOriginalValues();
+                    card.classList.add('editing');
+                    
+                    editableFields.forEach(field => {
+                        field.removeAttribute('readonly');
+                    });
+                    
+                    editBtn.style.display = 'none';
+                    saveBtn.style.display = 'inline-block';
+                    cancelBtn.style.display = 'inline-block';
+                });
+                
+                // Botón Cancelar
+                cancelBtn.addEventListener('click', function() {
+                    restoreOriginalValues();
+                    card.classList.remove('editing');
+                    
+                    editableFields.forEach(field => {
+                        field.setAttribute('readonly', true);
+                    });
+                    
+                    editBtn.style.display = 'inline-block';
+                    saveBtn.style.display = 'none';
+                    cancelBtn.style.display = 'none';
+                });
+                
+                // Botón Guardar
+                saveBtn.addEventListener('click', function() {
+                    const cursoId = card.dataset.id;
+                    const cursoData = {
+                        id: parseInt(cursoId)
+                    };
+                    
+                    // Recopilar datos de los campos editables
+                    editableFields.forEach(field => {
+                        const fieldName = field.dataset.field;
+                        let value = field.value;
+                        
+                        // Convertir tipos según sea necesario
+                        if (fieldName === 'horas') {
+                            value = parseInt(value) || 0;
+                        } else if (fieldName === 'precio') {
+                            value = parseFloat(value) || 0;
+                        }
+                        
+                        cursoData[fieldName] = value;
+                    });
+                    
+                    // Mostrar estado de carga
+                    card.classList.add('loading');
+                    
+                    // Enviar datos al servidor
+                    fetch('/cursos/update', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(cursoData)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        card.classList.remove('loading');
+                        
+                        if (data.success) {
+                            showMessage('Curso actualizado correctamente', 'success');
+                            
+                            // Salir del modo edición
+                            card.classList.remove('editing');
+                            editableFields.forEach(field => {
+                                field.setAttribute('readonly', true);
+                            });
+                            
+                            editBtn.style.display = 'inline-block';
+                            saveBtn.style.display = 'none';
+                            cancelBtn.style.display = 'none';
+                        } else {
+                            showMessage('Error: ' + data.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        card.classList.remove('loading');
+                        showMessage('Error de conexión: ' + error.message, 'error');
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

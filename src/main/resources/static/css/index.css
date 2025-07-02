@@ -1,0 +1,15 @@
+body{
+    background-color: rgba(188, 255, 224, 0.252);
+    align-items:flex-start;
+}
+.menuDiv{
+    position: absolute;
+    z-index: 1;
+    transform: translate(-50%);
+    left: 50%;
+  
+}   
+button.menuButton{
+    border-style: none;
+    
+}

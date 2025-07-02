@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arredondo y Sims Consultores - Formación en Atención Primaria de Salud</title>
+    <link th:rel="stylesheet" th:href="@{/css/cursos-styles.css}">
+    <style>
+        .hero-section {
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 0 2rem;
+            gap: 4rem;
+        }
+        
+        .hero-content {
+            flex: 1;
+            max-width: 500px;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+        
+        .hero-content p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary {
+            background-color: #4a7c59;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #3d6b4a;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: #666;
+            padding: 1rem 2rem;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            border-color: #4a7c59;
+            color: #4a7c59;
+        }
+        
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .image-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        
+        .programs-section {
+            text-align: center;
+            margin: 6rem auto 4rem;
+            max-width: 1200px;
+            padding: 0 2rem;
+        }
+        
+        .programs-section h2 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+        
+        .programs-subtitle {
+            color: #999;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .features-section {
+            background: rgba(74, 124, 89, 0.05);
+            padding: 4rem 0;
+            margin: 4rem 0;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: #4a7c59;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 24px;
+            color: white;
+        }
+
+        .stats-section {
+            background: #2c3e50;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            color: #4a7c59;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                flex-direction: column;
+                gap: 2rem;
+                margin-top: 40px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="menu :: menuFragment"></div>
+
+    <main>
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Arredondo y Sims Consultores</h1>
+                <p>
+                    Nos dedicamos desde el año 2009 a la formación de personas en la Atención Primaria de Salud con enfoque familiar y orientación en ECICEP. Somos especialistas en capacitación para profesionales de la salud que buscan excelencia en su práctica diaria.
+                </p>
+                <div class="hero-buttons">
+                    <a href="/contacto" class="btn-primary">CONTÁCTANOS</a>
+                    <a href="/us" class="btn-secondary">Leer Más</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img th:src="@{/images/charla.jpeg}" alt="Formación en Atención Primaria de Salud">
+                <div class="image-overlay">
+                    <strong>Diplomado Red Magallanes</strong><br>
+                    <small>abril-junio 2019</small>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="features-container">
+                <div class="programs-subtitle">¿POR QUÉ ELEGIRNOS?</div>
+                <h2 style="font-size: 2.5rem; color: #2c3e50; margin-bottom: 1rem; font-weight: 300;">Nuestra Propuesta de Valor</h2>
+                <p style="color: #666; max-width: 800px; margin: 0 auto 2rem; font-size: 1.1rem;">
+                    Más de 15 años de experiencia nos respaldan como líderes en formación especializada para la atención primaria de salud
+                </p>
+                
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎓</div>
+                        <h3 style="color: #2c3e50; margin-bottom: 1rem;">Experiencia Comprobada</h3>
+                        <p style="color: #666; line-height: 1.6;">
+                            Más de 15 años formando profesionales de la salud con metodologías innovadoras y actualizadas según las mejores prácticas internacionales.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">👥</div>
+                        <h3 style="color: #2c3e50; margin-bottom: 1rem;">Enfoque Integral</h3>
+                        <p style="color: #666; line-height: 1.6;">
+                            Aplicamos el modelo ECICEP considerando el ciclo de vida, aspectos interculturales, de género y participación social en cada programa.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🏥</div>
+                        <h3 style="color: #2c3e50; margin-bottom: 1rem;">Especialización APS</h3>
+                        <p style="color: #666; line-height: 1.6;">
+                            Nos especializamos exclusivamente en Atención Primaria de Salud, garantizando contenidos específicos y aplicables a la realidad del sector.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="programs-subtitle" style="color: #ccc;">NUESTROS NÚMEROS</div>
+            <h2 style="font-size: 2.5rem; margin-bottom: 3rem; font-weight: 300;">Impacto en Cifras</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>15+</h3>
+                    <p>Años de Experiencia</p>
+                </div>
+                <div class="stat-item">
+                    <h3>500+</h3>
+                    <p>Profesionales Capacitados</p>
+                </div>
+                <div class="stat-item">
+                    <h3>50+</h3>
+                    <p>Programas Desarrollados</p>
+                </div>
+                <div class="stat-item">
+                    <h3>12</h3>
+                    <p>Regiones Atendidas</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="programs-section">
+            <div class="programs-subtitle">NUESTROS</div>
+            <h2>Programas</h2>
+            <p style="color: #666; max-width: 800px; margin: 0 auto 2rem; font-size: 1.1rem;">
+                Ofrecemos una amplia gama de programas de formación especializados en atención primaria de salud, 
+                diseñados para profesionales que buscan excelencia en su práctica. Cada programa está cuidadosamente 
+                estructurado para proporcionar herramientas prácticas y conocimientos actualizados.
+            </p>
+            <div style="margin-top: 2rem;">
+                <a href="/cursos" class="btn-primary">Ver Nuestros Programas</a>
+            </div>
+        </section>
+    </main>
+
+    <div th:replace="menu :: finFragment"></div>
+</body>
+</html>

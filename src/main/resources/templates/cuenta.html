@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cuenta - Arredondo y Sims Consultores</title>
+    <link rel="stylesheet" th:href="@{/css/cursos-styles.css}">
+    <style>
+        .account-container {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 0 2rem;
+        }
+        
+        .account-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .account-header h1 {
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+        
+        .account-header p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .accounts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+        
+        .account-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(74, 124, 89, 0.1);
+        }
+        
+        .account-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4a7c59 0%, #3d6b4a 100%);
+        }
+        
+        .account-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+        }
+        
+        .account-card.user-card::before {
+            background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
+        }
+        
+        .account-card.admin-card::before {
+            background: linear-gradient(90deg, #dc3545 0%, #c82333 100%);
+        }
+        
+        .account-card.teacher-card::before {
+            background: linear-gradient(90deg, #6f42c1 0%, #5a2d91 100%);
+        }
+        
+        .account-header-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #f8f9fa;
+        }
+        
+        .account-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #f8f9fa;
+            transition: all 0.3s ease;
+        }
+        
+        .account-card:hover .account-avatar {
+            transform: scale(1.05);
+            border-color: #4a7c59;
+        }
+        
+        .account-info h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin: 0 0 0.5rem 0;
+            font-weight: 600;
+        }
+        
+        .account-email {
+            color: #666;
+            font-size: 1rem;
+            margin: 0;
+        }
+        
+        .account-role {
+            display: inline-block;
+            background: #4a7c59;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 0.5rem;
+        }
+        
+        .user-card .account-role {
+            background: #007bff;
+        }
+        
+        .admin-card .account-role {
+            background: #dc3545;
+        }
+        
+        .teacher-card .account-role {
+            background: #6f42c1;
+        }
+        
+        .account-details {
+            margin-bottom: 2rem;
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            color: #666;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .detail-value {
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .account-features {
+            margin-bottom: 2rem;
+        }
+        
+        .account-features h3 {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .features-list li {
+            color: #666;
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            line-height: 1.5;
+        }
+        
+        .features-list li::before {
+            content: "✓";
+            color: #4a7c59;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+        }
+        
+        .user-card .features-list li::before {
+            color: #007bff;
+        }
+        
+        .admin-card .features-list li::before {
+            color: #dc3545;
+        }
+        
+        .teacher-card .features-list li::before {
+            color: #6f42c1;
+        }
+        
+        .account-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.75rem;
+        }
+        
+        .action-btn {
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .action-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .action-btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            color: white;
+        }
+        
+        .btn-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(23, 162, 184, 0.3);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+            color: #212529;
+        }
+        
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+        }
+        
+        .btn-purple {
+            background: linear-gradient(135deg, #6f42c1 0%, #5a2d91 100%);
+            color: white;
+        }
+        
+        .btn-purple:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(111, 66, 193, 0.3);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            grid-column: 1 / -1;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+        }
+        
+        .account-stats {
+            background: rgba(74, 124, 89, 0.05);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .stat-item h3 {
+            color: #4a7c59;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-item p {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        @media (max-width: 768px) {
+            .account-container {
+                padding: 0 1rem;
+            }
+            
+            .account-header h1 {
+                font-size: 2rem;
+            }
+            
+            .accounts-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .account-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .account-header-section {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .account-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .account-card {
+                padding: 1.5rem 1rem;
+            }
+            
+            .account-avatar {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .account-info h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="menu :: menuFragment"></div>
+
+    <main class="account-container">
+        <div class="account-header">
+            <h1>Mi Cuenta</h1>
+            <p>Gestiona tu perfil y accede a las funcionalidades según tu rol en el sistema</p>
+        </div>
+
+        <div class="account-stats">
+            <h2 style="color: #2c3e50; margin-bottom: 1rem;">Estado del Sistema</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>3</h3>
+                    <p>Tipos de Usuario</p>
+                </div>
+                <div class="stat-item">
+                    <h3>24</h3>
+                    <p>Usuarios Activos</p>
+                </div>
+                <div class="stat-item">
+                    <h3>15</h3>
+                    <p>Programas Disponibles</p>
+                </div>
+                <div class="stat-item">
+                    <h3>98%</h3>
+                    <p>Disponibilidad</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accounts-grid">
+            <!-- Cuenta de Usuario -->
+            <div class="account-card user-card">
+                <div class="account-header-section">
+                    <img th:src="@{/images/pageIcon.png}" alt="Avatar Usuario" class="account-avatar">
+                    <div class="account-info">
+                        <h2>👤 Usuario Estudiante</h2>
+                        <p class="account-email">estudiante@correo.com</p>
+                        <span class="account-role">Estudiante</span>
+                    </div>
+                </div>
+
+                <div class="account-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Miembro desde:</span>
+                        <span class="detail-value">Enero 2024</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Último acceso:</span>
+                        <span class="detail-value">Hace 2 horas</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Cursos completados:</span>
+                        <span class="detail-value">3 de 5</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Certificados obtenidos:</span>
+                        <span class="detail-value">2</span>
+                    </div>
+                </div>
+
+                <div class="account-features">
+                    <h3>🎓 Mis Funcionalidades</h3>
+                    <ul class="features-list">
+                        <li>Acceso a cursos inscritos</li>
+                        <li>Seguimiento de progreso</li>
+                        <li>Descarga de certificados</li>
+                        <li>Evaluaciones y exámenes</li>
+                        <li>Foro de estudiantes</li>
+                    </ul>
+                </div>
+
+                <div class="account-actions">
+                    <button class="action-btn btn-primary">📚 Mis Cursos</button>
+                    <button class="action-btn btn-success">📜 Certificados</button>
+                    <button class="action-btn btn-info">⚙️ Editar Perfil</button>
+                    <button class="action-btn btn-warning">🔒 Cambiar Clave</button>
+                    <button class="action-btn btn-danger">🚪 Cerrar Sesión</button>
+                </div>
+            </div>
+
+            <!-- Cuenta de Administrador -->
+            <div class="account-card admin-card">
+                <div class="account-header-section">
+                    <img th:src="@{/images/pageIcon.png}" alt="Avatar Admin" class="account-avatar">
+                    <div class="account-info">
+                        <h2>🛡️ Administrador</h2>
+                        <p class="account-email">admin@arredondoysims.cl</p>
+                        <span class="account-role">Administrador</span>
+                    </div>
+                </div>
+
+                <div class="account-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Rol:</span>
+                        <span class="detail-value">Administrador General</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Último acceso:</span>
+                        <span class="detail-value">26 de junio de 2025</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Permisos:</span>
+                        <span class="detail-value">Completos</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Usuarios gestionados:</span>
+                        <span class="detail-value">47</span>
+                    </div>
+                </div>
+
+                <div class="account-features">
+                    <h3>🔧 Opciones del Sistema</h3>
+                    <ul class="features-list">
+                        <li>Gestión completa de usuarios</li>
+                        <li>Crear y editar programas</li>
+                        <li>Reportes y estadísticas</li>
+                        <li>Configuración del sistema</li>
+                        <li>Respaldos y mantenimiento</li>
+                    </ul>
+                </div>
+
+                <div class="account-actions">
+                    <button onclick="window.location.href = '/cuentas'" class="action-btn btn-info">👥 Gestionar Usuarios</button>
+                    <button onclick="window.location.href = '/editCursos'" class="action-btn btn-warning">📖 Gestionar Cursos</button>
+                    <button class="action-btn btn-primary">📊 Reportes</button>
+                    <button class="action-btn btn-success">⚙️ Configuración</button>
+                    <button class="action-btn btn-danger">🚪 Cerrar Sesión</button>
+                </div>
+            </div>
+
+            <!-- Cuenta de Profesor -->
+            <div class="account-card teacher-card">
+                <div class="account-header-section">
+                    <img th:src="@{/images/pageIcon.png}" alt="Avatar Profesor" class="account-avatar">
+                    <div class="account-info">
+                        <h2>👨‍🏫 Profesor</h2>
+                        <p class="account-email">profesor@arredondoysims.cl</p>
+                        <span class="account-role">Docente</span>
+                    </div>
+                </div>
+
+                <div class="account-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Área de especialidad:</span>
+                        <span class="detail-value">Salud Familiar</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Último acceso:</span>
+                        <span class="detail-value">25 de junio de 2025</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Cursos asignados:</span>
+                        <span class="detail-value">5</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Estudiantes activos:</span>
+                        <span class="detail-value">32</span>
+                    </div>
+                </div>
+
+                <div class="account-features">
+                    <h3>📚 Mis Funciones Docentes</h3>
+                    <ul class="features-list">
+                        <li>Gestión de cursos asignados</li>
+                        <li>Evaluación de estudiantes</li>
+                        <li>Creación de contenido</li>
+                        <li>Seguimiento de progreso</li>
+                        <li>Comunicación con estudiantes</li>
+                    </ul>
+                </div>
+
+                <div class="account-actions">
+                    <button onclick="window.location.href = '/editCursos'" class="action-btn btn-purple">📖 Mis Cursos</button>
+                    <button class="action-btn btn-success">👥 Mis Estudiantes</button>
+                    <button class="action-btn btn-info">📝 Crear Contenido</button>
+                    <button class="action-btn btn-primary">⚙️ Editar Perfil</button>
+                    <button class="action-btn btn-danger">🚪 Cerrar Sesión</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de ayuda -->
+        <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center; margin-top: 2rem;">
+            <h3 style="color: #2c3e50; margin-bottom: 1rem;">¿Necesitas ayuda?</h3>
+            <p style="color: #666; margin-bottom: 1.5rem;">
+                Si tienes problemas con tu cuenta o necesitas asistencia técnica, no dudes en contactarnos.
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="/contacto" class="action-btn btn-info">📞 Contactar Soporte</a>
+                <a href="/images" class="action-btn btn-success">📚 Ver Documentación</a>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="menu :: finFragment"></div>
+</body>
+</html>

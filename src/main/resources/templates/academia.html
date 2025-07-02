@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academia - Arredondo y Sims Consultores</title>
+    <link rel="stylesheet" th:href="@{/css/cursos-styles.css}">
+    <style>
+        .academia-container {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 0 2rem;
+        }
+        
+        .academia-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .academia-header h1 {
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+        
+        .academia-intro {
+            background: rgba(74, 124, 89, 0.05);
+            padding: 3rem;
+            border-radius: 12px;
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+        
+        .academia-intro h2 {
+            color: #4a7c59;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .academia-intro p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+        
+        .program-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .program-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .program-header {
+            background: linear-gradient(135deg, #4a7c59 0%, #3d6b4a 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .program-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .program-header .duration {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        .program-content {
+            padding: 2rem;
+        }
+        
+        .program-content h4 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .program-content ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .program-content li {
+            color: #666;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .program-content li:before {
+            content: "✓";
+            color: #4a7c59;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .program-footer {
+            padding: 1.5rem 2rem;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+        }
+        
+        .program-footer .price {
+            color: #4a7c59;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .program-footer .btn {
+            background: #4a7c59;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .program-footer .btn:hover {
+            background: #3d6b4a;
+        }
+        
+        .methodology-section {
+            background: #2c3e50;
+            color: white;
+            padding: 4rem 0;
+            margin: 4rem 0;
+        }
+        
+        .methodology-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+        
+        .methodology-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+        
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .methodology-item {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid #4a7c59;
+        }
+        
+        .methodology-item h3 {
+            color: #4a7c59;
+            margin-bottom: 1rem;
+        }
+        
+        .methodology-item p {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        .certification-section {
+            text-align: center;
+            margin: 4rem 0;
+        }
+        
+        .certification-section h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .certification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .certification-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-top: 4px solid #4a7c59;
+        }
+        
+        .certification-item h3 {
+            color: #4a7c59;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .academia-header h1 {
+                font-size: 2rem;
+            }
+            
+            .programs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .academia-intro {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="menu :: menuFragment"></div>
+
+    <main class="academia-container">
+        <div class="academia-header">
+            <h1>Academia Arredondo y Sims</h1>
+            <p style="font-size: 1.2rem; color: #666;">
+                Formación especializada de excelencia en Atención Primaria de Salud
+            </p>
+        </div>
+
+        <div class="academia-intro">
+            <h2>Nuestra Propuesta Académica</h2>
+            <p>
+                La Academia Arredondo y Sims representa nuestro compromiso con la formación continua y especializada 
+                de profesionales de la salud. A través de programas académicos rigurosos y metodologías innovadoras, 
+                ofrecemos una experiencia educativa integral que combina teoría actualizada con práctica aplicada, 
+                preparando a los profesionales para enfrentar los desafíos actuales de la atención primaria de salud.
+            </p>
+            <p style="margin-top: 1.5rem;">
+                Nuestros programas están diseñados bajo estándares académicos de excelencia, con certificación 
+                universitaria y reconocimiento del sector salud, garantizando la calidad y pertinencia de la formación impartida.
+            </p>
+        </div>
+
+        <div class="programs-grid">
+            <div class="program-card">
+                <div class="program-header">
+                    <h3>Diplomado en Salud Familiar</h3>
+                    <div class="duration">12 meses • 180 horas académicas</div>
+                </div>
+                <div class="program-content">
+                    <h4>Módulos del Programa:</h4>
+                    <ul>
+                        <li>Fundamentos del Modelo de Salud Familiar</li>
+                        <li>Metodologías de Trabajo con Familias</li>
+                        <li>Enfoque ECICEP en la Práctica Clínica</li>
+                        <li>Participación Comunitaria y Redes</li>
+                        <li>Gestión de Casos Complejos</li>
+                        <li>Proyecto de Aplicación Práctica</li>
+                    </ul>
+                </div>
+                <div class="program-footer">
+                    <div class="price">Consultar Valor</div>
+                    <a href="/contacto" class="btn">Solicitar Información</a>
+                </div>
+            </div>
+
+            <div class="program-card">
+                <div class="program-header">
+                    <h3>Diplomado en Multimorbilidad</h3>
+                    <div class="duration">8 meses • 120 horas académicas</div>
+                </div>
+                <div class="program-content">
+                    <h4>Módulos del Programa:</h4>
+                    <ul>
+                        <li>Epidemiología de la Multimorbilidad</li>
+                        <li>Evaluación Integral del Paciente Complejo</li>
+                        <li>Coordinación Asistencial</li>
+                        <li>Optimización Farmacológica</li>
+                        <li>Cuidados Paliativos en APS</li>
+                        <li>Trabajo en Equipo Multidisciplinario</li>
+                    </ul>
+                </div>
+                <div class="program-footer">
+                    <div class="price">Consultar Valor</div>
+                    <a href="/contacto" class="btn">Solicitar Información</a>
+                </div>
+            </div>
+
+            <div class="program-card">
+                <div class="program-header">
+                    <h3>Certificación en ECICEP</h3>
+                    <div class="duration">6 meses • 90 horas académicas</div>
+                </div>
+                <div class="program-content">
+                    <h4>Módulos del Programa:</h4>
+                    <ul>
+                        <li>Enfoque de Ciclo de Vida</li>
+                        <li>Competencias Interculturales</li>
+                        <li>Perspectiva de Género en Salud</li>
+                        <li>Participación Social Efectiva</li>
+                        <li>Herramientas de Evaluación</li>
+                        <li>Implementación Práctica</li>
+                    </ul>
+                </div>
+                <div class="program-footer">
+                    <div class="price">Consultar Valor</div>
+                    <a href="/contacto" class="btn">Solicitar Información</a>
+                </div>
+            </div>
+
+            <div class="program-card">
+                <div class="program-header">
+                    <h3>Especialización en Gestión APS</h3>
+                    <div class="duration">10 meses • 150 horas académicas</div>
+                </div>
+                <div class="program-content">
+                    <h4>Módulos del Programa:</h4>
+                    <ul>
+                        <li>Liderazgo en Equipos de Salud</li>
+                        <li>Gestión de Calidad en APS</li>
+                        <li>Planificación Estratégica</li>
+                        <li>Gestión de Recursos</li>
+                        <li>Evaluación de Programas</li>
+                        <li>Proyecto de Mejora Organizacional</li>
+                    </ul>
+                </div>
+                <div class="program-footer">
+                    <div class="price">Consultar Valor</div>
+                    <a href="/contacto" class="btn">Solicitar Información</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="methodology-section">
+            <div class="methodology-content">
+                <h2>Nuestra Metodología de Enseñanza</h2>
+                <p style="font-size: 1.1rem; margin-bottom: 3rem; opacity: 0.9;">
+                    Aplicamos metodologías pedagógicas innovadoras que favorecen el aprendizaje significativo 
+                    y la aplicación práctica de los conocimientos adquiridos.
+                </p>
+                
+                <div class="methodology-grid">
+                    <div class="methodology-item">
+                        <h3>Aprendizaje Basado en Problemas</h3>
+                        <p>Utilizamos casos reales y situaciones problemáticas del contexto de la atención primaria 
+                        para desarrollar competencias de análisis y resolución.</p>
+                    </div>
+                    <div class="methodology-item">
+                        <h3>Simulación Clínica</h3>
+                        <p>Espacios de práctica controlada que permiten el desarrollo de habilidades técnicas 
+                        y relacionales en un ambiente seguro de aprendizaje.</p>
+                    </div>
+                    <div class="methodology-item">
+                        <h3>Trabajo Colaborativo</h3>
+                        <p>Fomento del intercambio de experiencias entre participantes, creando redes de 
+                        aprendizaje que perduran más allá del programa.</p>
+                    </div>
+                    <div class="methodology-item">
+                        <h3>Mentoría Personalizada</h3>
+                        <p>Acompañamiento individual de expertos que guían el proceso de aprendizaje 
+                        y desarrollo profesional de cada participante.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="certification-section">
+            <h2>Certificación y Reconocimiento</h2>
+            <p style="color: #666; max-width: 800px; margin: 0 auto 2rem; font-size: 1.1rem;">
+                Nuestros programas cuentan con el respaldo académico y el reconocimiento del sector salud
+            </p>
+            
+            <div class="certification-grid">
+                <div class="certification-item">
+                    <h3>Certificación Universitaria</h3>
+                    <p>Todos nuestros diplomados cuentan con certificación de instituciones universitarias 
+                    reconocidas, garantizando la calidad académica y el valor curricular.</p>
+                </div>
+                <div class="certification-item">
+                    <h3>Reconocimiento MINSAL</h3>
+                    <p>Nuestros programas están alineados con las políticas y directrices del Ministerio de Salud, 
+                    asegurando su pertinencia y aplicabilidad en el sistema público.</p>
+                </div>
+                <div class="certification-item">
+                    <h3>Acreditación Profesional</h3>
+                    <p>Los certificados obtenidos son reconocidos por colegios profesionales y organismos 
+                    técnicos del sector salud para efectos de desarrollo profesional.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: rgba(74, 124, 89, 0.05); padding: 3rem; border-radius: 12px; text-align: center; margin: 4rem 0;">
+            <h2 style="color: #2c3e50; margin-bottom: 2rem;">¿Listo para dar el siguiente paso en tu carrera?</h2>
+            <p style="color: #666; font-size: 1.1rem; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Únete a nuestra comunidad de profesionales comprometidos con la excelencia en atención primaria de salud. 
+                Descubre cómo nuestros programas pueden transformar tu práctica profesional.
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="/contacto" style="background: #4a7c59; color: white; padding: 1rem 2rem; border-radius: 4px; text-decoration: none; font-weight: 600;">
+                    Solicitar Información
+                </a>
+                <a href="/cursos" style="background: transparent; color: #4a7c59; padding: 1rem 2rem; border: 2px solid #4a7c59; border-radius: 4px; text-decoration: none; font-weight: 600;">
+                    Ver Todos los Programas
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="menu :: finFragment"></div>
+</body>
+</html>

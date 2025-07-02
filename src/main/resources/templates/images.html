@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería - Arredondo y Sims Consultores</title>
+    <link rel="stylesheet" th:href="@{/css/cursos-styles.css}">
+    <style>
+        .gallery-container {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 0 2rem;
+        }
+        
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .gallery-header h1 {
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .gallery-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .gallery-item-content {
+            padding: 2rem;
+        }
+        
+        .gallery-item h3 {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .gallery-item p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .gallery-item .date {
+            color: #4a7c59;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .gallery-item .participants {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .activities-section {
+            background: rgba(74, 124, 89, 0.05);
+            padding: 4rem 3rem;
+            border-radius: 12px;
+            margin: 4rem 0;
+            text-align: center;
+        }
+        
+        .activities-section h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .activity-item {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .activity-item:hover {
+            transform: translateY(-3px);
+        }
+        
+        .activity-item h3 {
+            color: #4a7c59;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .activity-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .testimonials-section {
+            background: #2c3e50;
+            color: white;
+            padding: 4rem 0;
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .testimonials-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .testimonials-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-item {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid #4a7c59;
+        }
+
+        .testimonial-item p {
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: #4a7c59;
+        }
+        
+        @media (max-width: 768px) {
+            .gallery-header h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .activities-section {
+                padding: 2rem 1rem;
+            }
+
+            .activities-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="menu :: menuFragment"></div>
+
+    <main class="gallery-container">
+        <div class="gallery-header">
+            <h1>Galería</h1>
+            <p style="font-size: 1.2rem; color: #666; max-width: 800px; margin: 0 auto;">
+                Momentos destacados de nuestras actividades de formación y capacitación en atención primaria de salud. 
+                Cada imagen representa el compromiso y la dedicación de profesionales que buscan la excelencia en su práctica.
+            </p>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img th:src="@{/images/charla.jpeg}" alt="Diplomado Red Magallanes">
+                <div class="gallery-item-content">
+                    <div class="date">Abril - Junio 2019</div>
+                    <h3>Diplomado Red Magallanes</h3>
+                    <p>Programa intensivo de formación especializada para profesionales de la red de salud de Magallanes 
+                    en metodologías de atención primaria con enfoque familiar. Este diplomado abordó temas fundamentales 
+                    como el modelo MAIS, trabajo con familias y participación comunitaria.</p>
+                    <div class="participants">45 profesionales capacitados • Modalidad presencial</div>
+                </div>
+            </div>
+            
+            <div class="gallery-item">
+                <img th:src="@{/images/charlaAbrazo.jpeg}" alt="Taller de Metodologías Familiares">
+                <div class="gallery-item-content">
+                    <div class="date">Marzo 2020</div>
+                    <h3>Taller de Metodologías Familiares</h3>
+                    <p>Capacitación intensiva en herramientas prácticas para el trabajo con familias en el contexto de la 
+                    atención primaria de salud. Los participantes aprendieron técnicas de evaluación familiar, 
+                    instrumentos de intervención y estrategias de seguimiento.</p>
+                    <div class="participants">32 profesionales capacitados • Modalidad presencial</div>
+                </div>
+            </div>
+            
+            <div class="gallery-item">
+                <img th:src="@{/images/diagrama.jpeg}" alt="Seminario ECICEP">
+                <div class="gallery-item-content">
+                    <div class="date">Septiembre 2021</div>
+                    <h3>Seminario ECICEP</h3>
+                    <p>Jornada de capacitación especializada sobre el Enfoque de Ciclo de Vida, Intercultural, de Género 
+                    y de Participación Social. Este seminario proporcionó herramientas para implementar una atención 
+                    culturalmente pertinente y equitativa en los servicios de salud.</p>
+                    <div class="participants">68 profesionales capacitados • Modalidad híbrida</div>
+                </div>
+            </div>
+            
+            <div class="gallery-item">
+                <img th:src="@{/images/persona.jpeg}" alt="Curso de Multimorbilidad">
+                <div class="gallery-item-content">
+                    <div class="date">Mayo 2022</div>
+                    <h3>Curso de Multimorbilidad en APS</h3>
+                    <p>Formación especializada en el manejo integral de pacientes con múltiples patologías en atención primaria. 
+                    El curso abordó estrategias de coordinación asistencial, priorización de problemas de salud y 
+                    optimización de tratamientos en pacientes complejos.</p>
+                    <div class="participants">28 profesionales capacitados • Modalidad presencial</div>
+                </div>
+            </div>
+            
+            <div class="gallery-item">
+                <img th:src="@{/images/cartoon.jpeg}" alt="Taller de Trabajo Comunitario">
+                <div class="gallery-item-content">
+                    <div class="date">Agosto 2023</div>
+                    <h3>Taller de Trabajo Comunitario</h3>
+                    <p>Estrategias innovadoras para fortalecer la participación comunitaria y el trabajo en red en salud. 
+                    Los participantes desarrollaron competencias para la gestión de redes locales, diagnóstico participativo 
+                    y movilización de recursos comunitarios.</p>
+                    <div class="participants">38 profesionales capacitados • Modalidad presencial</div>
+                </div>
+            </div>
+            
+            <div class="gallery-item">
+                <img th:src="@{/images/laja.jpg}" alt="Diplomado Modelo Bio-Psico-Social">
+                <div class="gallery-item-content">
+                    <div class="date">Octubre 2023</div>
+                    <h3>Diplomado Modelo Bio-Psico-Social-Espiritual</h3>
+                    <p>Programa integral que considera todas las dimensiones del ser humano en la atención sanitaria. 
+                    Este diplomado promovió una visión holística del proceso salud-enfermedad, integrando aspectos 
+                    biológicos, psicológicos, sociales y espirituales en la práctica clínica.</p>
+                    <div class="participants">52 profesionales capacitados • Modalidad híbrida</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonials-section">
+            <div class="testimonials-content">
+                <h2>Lo que dicen nuestros participantes</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-item">
+                        <p>"La formación recibida ha transformado completamente mi práctica profesional. 
+                        Las herramientas aprendidas me han permitido brindar una atención más integral y humanizada."</p>
+                        <div class="testimonial-author">- Dra. María González, Médico Familiar</div>
+                    </div>
+                    <div class="testimonial-item">
+                        <p>"El enfoque práctico y la experiencia del equipo docente hacen que cada programa sea 
+                        una experiencia de aprendizaje enriquecedora y aplicable inmediatamente en terreno."</p>
+                        <div class="testimonial-author">- Enf. Carlos Mendoza, Enfermero APS</div>
+                    </div>
+                    <div class="testimonial-item">
+                        <p>"Los contenidos están actualizados y responden a las necesidades reales de la atención primaria. 
+                        Recomiendo ampliamente estos programas a todos los profesionales del área."</p>
+                        <div class="testimonial-author">- Ps. Ana Rodríguez, Psicóloga Comunitaria</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="activities-section">
+            <h2>Nuestras Modalidades de Formación</h2>
+            <p style="color: #666; max-width: 900px; margin: 0 auto 2rem; font-size: 1.1rem;">
+                A lo largo de los años, hemos desarrollado múltiples modalidades de formación, capacitación y consultoría 
+                en diferentes regiones del país, adaptándonos a las necesidades específicas de cada organización y contexto.
+            </p>
+            
+            <div class="activities-grid">
+                <div class="activity-item">
+                    <h3>Diplomados Universitarios</h3>
+                    <p>Programas de formación especializada con certificación universitaria en diversas áreas de la salud familiar. 
+                    Duración de 6 a 12 meses con metodología teórico-práctica y acompañamiento personalizado.</p>
+                </div>
+                <div class="activity-item">
+                    <h3>Cursos de Capacitación</h3>
+                    <p>Talleres y seminarios focalizados en temas específicos de atención primaria y salud comunitaria. 
+                    Programas intensivos de 1 a 5 días con enfoque eminentemente práctico y aplicable.</p>
+                </div>
+                <div class="activity-item">
+                    <h3>Consultoría Especializada</h3>
+                    <p>Asesoría técnica especializada para organizaciones de salud en implementación de modelos de atención, 
+                    desarrollo organizacional y mejoramiento de procesos asistenciales.</p>
+                </div>
+                <div class="activity-item">
+                    <h3>Capacitación In-House</h3>
+                    <p>Programas diseñados a medida para organizaciones específicas, desarrollados en las instalaciones 
+                    del cliente y adaptados a sus necesidades particulares y contexto organizacional.</p>
+                </div>
+                <div class="activity-item">
+                    <h3>Formación Virtual</h3>
+                    <p>Programas de capacitación en modalidad online y híbrida, utilizando plataformas tecnológicas 
+                    avanzadas que permiten la interacción y el aprendizaje colaborativo a distancia.</p>
+                </div>
+                <div class="activity-item">
+                    <h3>Investigación Aplicada</h3>
+                    <p>Desarrollo de estudios e investigaciones aplicadas en el ámbito de la atención primaria de salud, 
+                    generando evidencia para la mejora continua de las prácticas asistenciales.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="menu :: finFragment"></div>
+</body>
+</html>

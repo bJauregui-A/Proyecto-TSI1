@@ -1,0 +1,119 @@
+<!-- fragments.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+    
+    <div class="menuDiv" id="uper" th:fragment="menuFragment">
+        <form id="menuForm" method="get">
+            <div class="logo-section">
+                <img class="icon2" th:src="@{/images/pageIcon.png}" alt="Arredondo y Sims Consultores">
+
+            </div>
+            
+            <button type="button" class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+            
+            <div class="menuu" id="mobileMenu">
+                <button formaction="/index" class="menuButton">Home</button>
+                <button formaction="/us" class="menuButton">¿Quiénes Somos?</button>
+                <button formaction="/cursos" class="menuButton">Programas</button>
+                <button formaction="/contacto" class="menuButton">Contacto</button>
+                <button formaction="/images" class="menuButton">Galería</button>
+                <button formaction="/academia" class="menuButton">Academia</button>
+            </div>
+            
+            <div class="user-section">
+                <a th:href="@{/cuenta}">
+                    <img class="user-icon" th:src="@{/images/usricon.png}" alt="Acceso usuario">
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer-section" th:fragment="finFragment">
+        <div class="footer-content">
+            <div class="footer-main">
+                <div class="footer-column">
+                    <h3>Arredondo y Sims</h3>
+                    <ul>
+                        <li>Nuestra consultora</li>
+                        <li>Historia y trayectoria</li>
+                        <li>Equipo profesional</li>
+                        <li>Certificaciones</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Servicios</h3>
+                    <ul>
+                        <li>Diplomados universitarios</li>
+                        <li>Cursos de capacitación</li>
+                        <li>Consultoría especializada</li>
+                        <li>Formación in-house</li>
+                        <li>Academia virtual</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Áreas de Trabajo</h3>
+                    <ul>
+                        <li>Modelo de Salud Familiar MAIS</li>
+                        <li>Multimorbilidad en APS</li>
+                        <li>Metodologías familiares</li>
+                        <li>Trabajo comunitario</li>
+                        <li>Desarrollo organizacional</li>
+                        <li>Modelo Bio-Psico-Social</li>
+                        <li>ECICEP</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <div class="contact-item">
+                        <span>📞</span>
+                        <span>569 - 84068570</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📱</span>
+                        <span>+56 9 84068570</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>✉️</span>
+                        <span>contacto@arredondoysims.cl</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📍</span>
+                        <span>Los Aguilera 319<br>Barrio Universitario<br>Concepción, Chile</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Arredondo y Sims Consultores. Todos los derechos reservados.</p>
+                <p style="margin-top: 0.5rem; font-size: 0.8rem;">
+                    Especialistas en formación para Atención Primaria de Salud desde 2009
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobileMenu');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (!menu.contains(event.target) && !toggle.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+
+</body>
+</html>

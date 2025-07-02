@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cursos Disponibles - Arredondo y Sims Consultores</title>
+    <link rel="stylesheet" th:href="@{/css/cursos-styles.css}">
+</head>
+<body>
+    <div th:replace="menu :: menuFragment"></div>
+
+    <!-- Título principal mejorado -->
+    <div class="fin">
+        <h1>Nuestros Programas de Formación</h1>
+        <p style="color: #666; font-size: 1.1rem; margin-top: 1rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Descubre nuestra amplia gama de programas especializados en Atención Primaria de Salud, 
+            diseñados para profesionales comprometidos con la excelencia.
+        </p>
+    </div>
+
+    <!-- Sección del botón agregar curso -->
+    <div class="add-course-section">
+        <button onclick="toggleForm()" class="add-course-btn">
+            ✨ Agregar Nuevo Programa
+        </button>
+    </div>
+
+    <!-- Formulario mejorado -->
+    <div id="cursoForm" style="display: none;">
+        <h2>Crear Nuevo Programa</h2>
+        <form method="post" th:action="@{/addCurso}">
+            <input type="text" name="nombre" placeholder="📚 Nombre del programa" required />
+            <textarea name="descripcion" placeholder="📝 Descripción detallada del programa" rows="4" required></textarea>
+            <input type="text" name="dirigidoa" placeholder="👥 Dirigido a (ej: Médicos, Enfermeros, etc.)" required />
+            <input type="text" name="modalidad" placeholder="🎯 Modalidad (Presencial, Virtual, Híbrida)" required />
+            <input type="number" name="horas" placeholder="⏰ Duración en horas" required />
+            <input type="number" name="precio" placeholder="💰 Precio en pesos chilenos" required />
+            <input type="url" name="linkPago" placeholder="🔗 Link de inscripción o pago" required />
+            <button type="submit">
+                🚀 Crear Programa
+            </button>
+        </form>
+    </div>
+
+    <!-- Grid de cursos mejorado -->
+    <div class="cursos-container">
+        <div th:each="curso : ${cursos}" class="curso-card">
+            <h2 th:text="${curso.nombre}">Nombre del programa</h2>
+            <p th:text="${curso.descripcion}">Descripción del programa</p>
+            
+            <!-- Información adicional del curso -->
+            <div class="curso-info">
+                <div class="curso-detail">
+                    <span class="curso-detail-label">Modalidad</span>
+                    <span class="curso-detail-value" th:text="${curso.modalidad}">Presencial</span>
+                </div>
+                <div class="curso-detail">
+                    <span class="curso-detail-label">Dirigido a</span>
+                    <span class="curso-detail-value" th:text="${curso.dirigidoa}">Profesionales</span>
+                </div>
+                <div class="curso-detail">
+                    <span class="curso-detail-label">Duración</span>
+                    <span class="curso-detail-value" th:text="${curso.horas} + ' horas'">40 horas</span>
+                </div>
+                <div class="curso-detail">
+                    <span class="curso-detail-label">Certificación</span>
+                    <span class="curso-detail-value">Universitaria</span>
+                </div>
+            </div>
+            
+            <p class="precio" th:text="'$' + ${#numbers.formatInteger(curso.precio, 0, 'POINT')}">Precio</p>
+            <a th:href="${curso.linkPago}" target="_blank">🎓 Inscribirse Ahora</a>
+        </div>
+    </div>
+
+    <!-- Mensaje cuando no hay cursos -->
+    <div th:if="${#lists.isEmpty(cursos)}" style="text-align: center; padding: 4rem 2rem; color: #666;">
+        <h3 style="color: #2c3e50; margin-bottom: 1rem;">No hay programas disponibles</h3>
+        <p>Pronto estaremos agregando nuevos programas de formación.</p>
+        <p style="margin-top: 2rem;">
+            <a href="/contacto" style="color: #4a7c59; text-decoration: none; font-weight: 600;">
+                📞 Contáctanos para más información
+            </a>
+        </p>
+    </div>
+
+    <div th:replace="menu :: finFragment"></div>
+    <script src="/js/cursos.js"></script>
+</body>
+</html>
